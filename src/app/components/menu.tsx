@@ -56,7 +56,7 @@ function Menu() {
 
   function getItemCountByCategory(category: string) {
     let number = 0;
-    orderItems.values().forEach((orderItemData) => {
+    orderItems.values().toArray().forEach((orderItemData) => {
       if (orderItemData.itemData.categoria == category) number += orderItemData.amount;
     });
     return number > 0 ? <Badge bg="primary" className='ms-auto position-absolute' style={{ right: '50px'}} pill>{number}</Badge> : <></>;

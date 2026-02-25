@@ -70,7 +70,7 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
 
   const orderItemsCount = useMemo(() => {
     let count = 0;
-    orderItems.values().forEach((orderItemData) => {
+    orderItems.values().toArray().forEach((orderItemData) => {
       count += orderItemData.amount;
     });
     return count;
@@ -78,7 +78,7 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
 
   const orderItemsPriceTotal = useMemo(() => {
     let price = 0;
-    orderItems.values().forEach((orderItemData) => {
+    orderItems.values().toArray().forEach((orderItemData) => {
       price += orderItemData.itemData.preco * orderItemData.amount;
     });
     return new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(price);
