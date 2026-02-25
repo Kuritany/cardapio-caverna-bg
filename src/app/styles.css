@@ -1,0 +1,9 @@
+.accordion-button:focus {
+  box-shadow: none;
+  outline: 0;
+}
+
+.form-control,
+.form-select {
+  padding: .2rem .2rem;
+}
