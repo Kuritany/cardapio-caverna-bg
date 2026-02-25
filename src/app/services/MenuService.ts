@@ -1,7 +1,7 @@
 class MenuService {
   async getMenuData() {
     const url = "https://script.google.com/macros/s/AKfycbzXjjxOOQBBhrhxeiANKWEtEcP61Kdm8VUoaqWQbC1NOG20oV6wa-DehoAY0NkHWEIVRw/exec"
-    return await fetch(process.env.MENU_API_URL!).then(response => {
+    return await fetch(url).then(response => {
       const res = response.json();
       return res;
     })
