@@ -168,7 +168,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
           </div>
           <div className="overflow-y-scroll">
             <ListGroup>
-              {orderItems.entries().map((item: [string, OrderItemData], index: number) => (
+              {/* {orderItems.entries().map((item: [string, OrderItemData], index: number) => (
                 <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start p-1">
                     <div className="w-100 d-flex me-1">
                       {item[1].amount}X {item[0]}
@@ -177,8 +177,8 @@ export default function FinishOrderModal({ show, onClose }: Props) {
                       </span>
                     </div>
                 </ListGroup.Item>
-              ))}
-              </ListGroup>
+              ))} */}
+            </ListGroup>
           </div>
         </Modal.Body>
         <Modal.Footer>
