@@ -1,5 +1,5 @@
 'use client'
-import { ActionDispatch, createContext, useContext, useMemo, useReducer, useState } from "react";
+import { ActionDispatch, createContext, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import ItemData, { OrderItemData } from "../types/ItemData";
 
 interface IOrder {
@@ -54,12 +54,19 @@ function itemsReducer(state: Map<string, OrderItemData>, action: IItemsAction) {
 
 export const OrderProvider = ({ menuData, children }: { menuData: any, children: any}) => {
   const menu = useMemo(() => menuData, []);
-  const [nome, setNome] = useState<string>(localStorage.getItem("nome") ?? "");
-  const [telefone, setTelefone] = useState<string>(localStorage.getItem("telefone") ?? "(67)");
-  const [unidade, setUnidade] = useState<string>(sessionStorage.getItem("unidade") ?? "1");
-  const [mesa, setMesa] = useState<string>(sessionStorage.getItem("mesa") ??  "");
+  const [nome, setNome] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("(67)");
+  const [unidade, setUnidade] = useState<string>("1");
+  const [mesa, setMesa] = useState<string>("");
   const [orderItems, setOrderItems] = useReducer(itemsReducer, new Map<string, OrderItemData>());
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("nome")) setNome(localStorage.getItem("nome") ?? "");
+    if (localStorage.getItem("telefone")) setNome(localStorage.getItem("telefone") ?? "(67)");
+    if (sessionStorage.getItem("unidade")) setNome(sessionStorage.getItem("unidade") ?? "1");
+    if (sessionStorage.getItem("mesa")) setNome(sessionStorage.getItem("mesa") ?? "");
+  }, []);
 
   const orderItemsCount = useMemo(() => {
     let count = 0;
