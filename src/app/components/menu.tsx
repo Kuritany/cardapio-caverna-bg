@@ -18,32 +18,33 @@ function Menu() {
     const itemName = `${category} - ${item?.item}`;
     const itemData = { categoria: category, item: item.item, preco: item.preco };
 
-    if (orderItems.keys().toArray().includes(itemName))
-      return <>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            setItems({ type: orderItems.get(itemName)?.amount == 1 ? "exclude" : "decrease", item: itemData });
-          }}
-          variant="danger"
-          className='p-1 d-flex align-items-center'
-          style={{ height: '34px' }}
-        >
-          {orderItems.get(itemName)?.amount == 1 ? <BsFillTrash3Fill /> : <MdRemove />}
-        </Button>
-        <span className='mx-auto'>{orderItems.get(itemName)?.amount}</span>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            setItems({ type: "increase", item: itemData });
-          }}
-          className='p-1 d-flex align-items-center'
-          style={{ height: '34px' }}
-        >
-          <MdAdd />
-        </Button>
-      </>;
-    else return <Button
+    // if (orderItems.keys().toArray().includes(itemName))
+    //   return <>
+    //     <Button
+    //       onClick={(e) => {
+    //         e.preventDefault();
+    //         setItems({ type: orderItems.get(itemName)?.amount == 1 ? "exclude" : "decrease", item: itemData });
+    //       }}
+    //       variant="danger"
+    //       className='p-1 d-flex align-items-center'
+    //       style={{ height: '34px' }}
+    //     >
+    //       {orderItems.get(itemName)?.amount == 1 ? <BsFillTrash3Fill /> : <MdRemove />}
+    //     </Button>
+    //     <span className='mx-auto'>{orderItems.get(itemName)?.amount}</span>
+    //     <Button
+    //       onClick={(e) => {
+    //         e.preventDefault();
+    //         setItems({ type: "increase", item: itemData });
+    //       }}
+    //       className='p-1 d-flex align-items-center'
+    //       style={{ height: '34px' }}
+    //     >
+    //       <MdAdd />
+    //     </Button>
+    //   </>;
+    // else
+      return <Button
         onClick={(e) => {
           e.preventDefault();
           setItems({ type: "include", item: itemData });
