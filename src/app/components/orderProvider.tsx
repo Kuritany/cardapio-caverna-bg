@@ -16,6 +16,8 @@ interface IOrder {
   setOrderItems: ActionDispatch<[action: IItemsAction]>;
   orderItemsCount: number;
   orderItemsPriceTotal: string;
+  isLoading: boolean;
+  setIsLoading: any;
 }
 
 const OrderContext = createContext<IOrder>({} as IOrder);
@@ -53,10 +55,11 @@ function itemsReducer(state: Map<string, OrderItemData>, action: IItemsAction) {
 export const OrderProvider = ({ menuData, children }: { menuData: any, children: any}) => {
   const menu = useMemo(() => menuData, []);
   const [nome, setNome] = useState<string>(localStorage.getItem("nome") ?? "");
-  const [telefone, setTelefone] = useState<string>(localStorage.getItem("telefone") ?? "");
-  const [unidade, setUnidade] = useState<string>(sessionStorage.getItem("unidade") ?? "");
+  const [telefone, setTelefone] = useState<string>(localStorage.getItem("telefone") ?? "(67)");
+  const [unidade, setUnidade] = useState<string>(sessionStorage.getItem("unidade") ?? "1");
   const [mesa, setMesa] = useState<string>(sessionStorage.getItem("mesa") ??  "");
   const [orderItems, setOrderItems] = useReducer(itemsReducer, new Map<string, OrderItemData>());
+  const [isLoading, setIsLoading] = useState(false);
 
   const orderItemsCount = useMemo(() => {
     let count = 0;
@@ -89,7 +92,9 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
         orderItems,
         setOrderItems,
         orderItemsCount,
-        orderItemsPriceTotal
+        orderItemsPriceTotal,
+        isLoading,
+        setIsLoading
       }}
     >
       {children}

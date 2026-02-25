@@ -2,9 +2,9 @@
 import { Badge, Button, ListGroup } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import { useOrderContext } from './orderProvider';
-import * as Icon from 'react-bootstrap-icons';
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 function Menu() {
   const { menuData, orderItems, setOrderItems: setItems } = useOrderContext();
@@ -29,7 +29,7 @@ function Menu() {
           className='p-1 d-flex align-items-center'
           style={{ height: '34px' }}
         >
-          {orderItems.get(itemName)?.amount == 1 ? <Icon.Trash /> : <MdRemove />}
+          {orderItems.get(itemName)?.amount == 1 ? <BsFillTrash3Fill /> : <MdRemove />}
         </Button>
         <span className='mx-auto'>{orderItems.get(itemName)?.amount}</span>
         <Button
@@ -65,7 +65,7 @@ function Menu() {
   return (
     <div
       className="overflow-y-scroll border-bottom border-top border-primary vw-100 position-absolute"
-      style={{ top: "40px", bottom: "54px" }}
+      style={{ top: "54px", bottom: "54px" }}
     >
       <Accordion defaultActiveKey={defaultActiveKeyList} alwaysOpen>
         {menuData.map((category: any, index: number) => (

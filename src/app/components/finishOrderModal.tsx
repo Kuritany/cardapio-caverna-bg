@@ -4,6 +4,10 @@ import { useOrderContext } from "./orderProvider";
 import Modal from 'react-bootstrap/Modal';
 import { OrderItemData } from "../types/ItemData";
 import OrdersService from "../services/OrdersService";
+import { ChangeEvent, useState } from "react";
+import Spinner from 'react-bootstrap/Spinner';
+import { MaskPhoneInput } from "../helpers/phoneMaskHelper";
+import UseWhatsapp from 'whatsapp-react-component';
 
 type Props = {
   show: boolean;
@@ -23,7 +27,8 @@ export default function FinishOrderModal({ show, onClose }: Props) {
     orderItems,
     setOrderItems,
     orderItemsCount,
-    orderItemsPriceTotal
+    orderItemsPriceTotal,
+    setIsLoading
   } = useOrderContext();
 
   function handleBlur(field: string, value: string, storageType: "local" | "session") {
@@ -41,19 +46,51 @@ export default function FinishOrderModal({ show, onClose }: Props) {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const status = await OrdersService.postOrder(
-      {
-        nome,
-        telefone,
-        unidade,
-        mesa,
-        orderItems: orderItems.values().toArray(),
-        observacao: e.target.observacao.value
-      }
-    );
-    if (status) setOrderItems({ type: "clear" });
-    else alert("Occoreu um erro ao realizar seu pedido, entre em contato com a administração.");
-    onClose();
+    setIsLoading(true);
+    try {
+      validateFields();
+      const status = await OrdersService.postOrder(
+        {
+          nome,
+          telefone,
+          unidade,
+          mesa,
+          orderItems: orderItems.values().toArray(),
+          observacao: e.target.observacao.value
+        }
+      );
+      setOrderItems({ type: "clear" });
+      onClose();
+      UseWhatsapp("5567999580041", generateOrderMessage(e.target.observacao.value));
+    } catch(e: any) {
+      alert(e.message);
+    }
+    finally {      
+      setIsLoading(false);
+    }
+  }
+
+  function generateOrderMessage(observacao?: string) {
+    let message = "";
+    message += `${nome} - ${telefone}`;
+    message += `\nCaverna ${unidade} - Mesa ${mesa}`;
+    orderItems.forEach((item) => {
+      message += `\n${item.amount}X ${item.itemData.categoria} - ${item.itemData.item}`;
+    });
+    if (observacao) message += `\nObservação: ${observacao}`;
+    return message;
+  }
+
+  function validateFields() {
+    if (!nome) throw Error('Campo "Nome" deve ser informado.');
+    if (!telefone || telefone.length != 15) throw Error('Campo "Telefone" deve ser informado.');
+    if (!unidade) throw Error('Campo "Unidade" deve ser informado.');
+    if (!mesa) throw Error('Campo "Mesa" deve ser informado.');
+  }
+
+  function handleChangeTelefone(e: any) {
+    const masked = MaskPhoneInput(e.target.value, "(99) 99999-9999");
+    setTelefone(masked);
   }
   
   return (
@@ -78,22 +115,22 @@ export default function FinishOrderModal({ show, onClose }: Props) {
               onBlur={() => handleBlur("nome", nome, "local")}
             />
             <InputGroup className="d-flex flex-nowrap">
-              <Form.Control
+              {/* <Form.Control
                 placeholder="DDD"
                 aria-label="DDD"
                 aria-describedby="basic-addon1"
                 style={{ width: "30px" }}
                 defaultValue="67"
                 maxLength={4}
-              />
+              /> */}
               <Form.Control
                 placeholder="Telefone"
                 className="w-100"
-                maxLength={10}
                 type="text"
-                onChange={(e) => setTelefone(e.target.value)}
+                onChange={handleChangeTelefone}
                 defaultValue={telefone}
                 onBlur={() => handleBlur("telefone", telefone, "local")}
+                value={telefone}
               />
             </InputGroup>
           </div>
@@ -155,12 +192,3 @@ export default function FinishOrderModal({ show, onClose }: Props) {
     </Modal>
   );
 }
-
-/*
-AKfycbz_5i5Djv3bIaTtWei9sQTHIc8-zfhhyZmdiXs79OMZ2i8Ncba0Kv7jfpdK9vCWU9h0
-
-https://script.google.com/macros/s/AKfycbz_5i5Djv3bIaTtWei9sQTHIc8-zfhhyZmdiXs79OMZ2i8Ncba0Kv7jfpdK9vCWU9h0/exec
-
-Nome	Telefone	Unidade	Mesa	Item	Valor	DataHora	Cancelado	Pago
-
-*/

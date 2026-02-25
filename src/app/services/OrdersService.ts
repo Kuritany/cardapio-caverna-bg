@@ -14,7 +14,7 @@ class OrdersService {
       return response.ok;
     }).catch(error => {
       console.error('Error occurred during CORS request:', error);
-      return false;
+      throw Error("Occoreu um erro ao realizar seu pedido, entre em contato com a administração.");
     });
     
   }
@@ -24,12 +24,7 @@ export default new OrdersService();
 
 
 
-  /*
-AKfycbz_5i5Djv3bIaTtWei9sQTHIc8-zfhhyZmdiXs79OMZ2i8Ncba0Kv7jfpdK9vCWU9h0
-
-https://script.google.com/macros/s/AKfycbz_5i5Djv3bIaTtWei9sQTHIc8-zfhhyZmdiXs79OMZ2i8Ncba0Kv7jfpdK9vCWU9h0/exec
-
-Nome	Telefone	Unidade	Mesa	Item	Valor	DataHora	Cancelado	Pago
+/*
 
 fetch(
       url,
