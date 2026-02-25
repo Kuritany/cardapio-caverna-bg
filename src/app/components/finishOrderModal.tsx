@@ -7,7 +7,6 @@ import OrdersService from "../services/OrdersService";
 import { ChangeEvent, useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { MaskPhoneInput } from "../helpers/phoneMaskHelper";
-import UseWhatsapp from 'whatsapp-react-component';
 
 type Props = {
   show: boolean;
@@ -61,7 +60,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
       );
       setOrderItems({ type: "clear" });
       onClose();
-      UseWhatsapp("5567999580041", generateOrderMessage(e.target.observacao.value));
+      // UseWhatsapp("5567999580041", generateOrderMessage(e.target.observacao.value));
     } catch(e: any) {
       alert(e.message);
     }
@@ -70,16 +69,16 @@ export default function FinishOrderModal({ show, onClose }: Props) {
     }
   }
 
-  function generateOrderMessage(observacao?: string) {
-    let message = "";
-    message += `${nome} - ${telefone}`;
-    message += `\nCaverna ${unidade} - Mesa ${mesa}`;
-    orderItems.forEach((item) => {
-      message += `\n${item.amount}X ${item.itemData.categoria} - ${item.itemData.item}`;
-    });
-    if (observacao) message += `\nObservação: ${observacao}`;
-    return message;
-  }
+  // function generateOrderMessage(observacao?: string) {
+  //   let message = "";
+  //   message += `${nome} - ${telefone}`;
+  //   message += `\nCaverna ${unidade} - Mesa ${mesa}`;
+  //   orderItems.forEach((item) => {
+  //     message += `\n${item.amount}X ${item.itemData.categoria} - ${item.itemData.item}`;
+  //   });
+  //   if (observacao) message += `\nObservação: ${observacao}`;
+  //   return message;
+  // }
 
   function validateFields() {
     if (!nome) throw Error('Campo "Nome" deve ser informado.');
