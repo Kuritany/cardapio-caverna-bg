@@ -58,7 +58,7 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
   const [telefone, setTelefone] = useState<string>("(67)");
   const [unidade, setUnidade] = useState<string>("1");
   const [mesa, setMesa] = useState<string>("");
-  const [orderItems, setOrderItems] = useReducer(itemsReducer, new Map<string, OrderItemData>());
+  const [orderItems, setOrderItems] = useReducer(itemsReducer, new Map<string, OrderItemData>([]));
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
