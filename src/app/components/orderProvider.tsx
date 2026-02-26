@@ -18,6 +18,8 @@ interface IOrder {
   orderItemsPriceTotal: string;
   isLoading: boolean;
   setIsLoading: any;
+  observacao: string;
+  setObservacao: any;
 }
 
 const OrderContext = createContext<IOrder>({} as IOrder);
@@ -60,6 +62,7 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
   const [mesa, setMesa] = useState<string>("");
   const [orderItems, setOrderItems] = useReducer(itemsReducer, new Map<string, OrderItemData>([]));
   const [isLoading, setIsLoading] = useState(false);
+  const [observacao, setObservacao] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("nome")) setNome(localStorage.getItem("nome") ?? "");
@@ -101,7 +104,9 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
         orderItemsCount,
         orderItemsPriceTotal,
         isLoading,
-        setIsLoading
+        setIsLoading,
+        observacao,
+        setObservacao
       }}
     >
       {children}

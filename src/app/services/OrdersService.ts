@@ -1,14 +1,14 @@
 import { OrderData } from "../types/ItemData";
 
 class OrdersService {
-  async postOrder(OrderData: OrderData) {
+  async postOrder(orderData: OrderData) {
     const url = "https://script.google.com/macros/s/AKfycby5CCfXxWIEGhbboZeLkXLo1YUUB1gQrK2IGHw_Vs7DLTMhLtQ1rHidBJtI6PWH84rj/exec"
     return await fetch(
       url,
       {
         method: "POST",
         headers: { "Content-type": "application/x-www-form-urlencoded" },
-        body: `data=${JSON.stringify(OrderData)}`
+        body: `data=${JSON.stringify(orderData)}`
       }
     ).then(response => {
       console.log('Response from server:', response);

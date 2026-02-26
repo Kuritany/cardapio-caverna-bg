@@ -7,6 +7,7 @@ import OrdersService from "../services/OrdersService";
 import { ChangeEvent, useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { MaskPhoneInput } from "../helpers/phoneMaskHelper";
+import OrderPoster from "./orderPoster";
 
 type Props = {
   show: boolean;
@@ -27,7 +28,10 @@ export default function FinishOrderModal({ show, onClose }: Props) {
     setOrderItems,
     orderItemsCount,
     orderItemsPriceTotal,
-    setIsLoading
+    isLoading,
+    setIsLoading,
+    observacao,
+    setObservacao
   } = useOrderContext();
 
   function handleBlur(field: string, value: string, storageType: "local" | "session") {
@@ -46,27 +50,27 @@ export default function FinishOrderModal({ show, onClose }: Props) {
   async function handleSubmit(e: any) {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      validateFields();
-      const status = await OrdersService.postOrder(
-        {
-          nome,
-          telefone,
-          unidade,
-          mesa,
-          orderItems: [...orderItems.values()],
-          observacao: e.target.observacao.value
-        }
-      );
-      setOrderItems({ type: "clear" });
-      onClose();
-      // UseWhatsapp("5567999580041", generateOrderMessage(e.target.observacao.value));
-    } catch(e: any) {
-      alert(e.message);
-    }
-    finally {      
-      setIsLoading(false);
-    }
+    // try {
+    //   validateFields();
+    //   const status = await OrdersService.postOrder(
+    //     {
+    //       nome,
+    //       telefone,
+    //       unidade,
+    //       mesa,
+    //       orderItems: [...orderItems.values()],
+    //       observacao: e.target.observacao.value
+    //     }
+    //   );
+    //   setOrderItems({ type: "clear" });
+    //   onClose();
+    //   // UseWhatsapp("5567999580041", generateOrderMessage(e.target.observacao.value));
+    // } catch(e: any) {
+    //   alert(e.message);
+    // }
+    // finally {      
+    //   setIsLoading(false);
+    // }
   }
 
   // function generateOrderMessage(observacao?: string) {
@@ -159,6 +163,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
             name="observacao"
             placeholder="Observação"
             className="mb-3"
+            onChange={(e) => setObservacao(e.target.value)}
           />
           <div className="d-flex justify-content-between align-items-start p-1">
             <b className="me-1">Total:</b>{orderItemsCount} ite{orderItemsCount > 1 ? 'ns' : 'm'}
@@ -189,6 +194,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
           <Button variant="primary" type="submit">Finalizar Pedido</Button>
         </Modal.Footer>
       </Form>
+      {isLoading && <OrderPoster onClose={onClose} />}
     </Modal>
   );
 }
