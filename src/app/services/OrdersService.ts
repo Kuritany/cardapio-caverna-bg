@@ -2,7 +2,7 @@ import { OrderData } from "../types/ItemData";
 
 class OrdersService {
   async postOrder(OrderData: OrderData) {
-    const url = "https://proxy.corsfix.com/?https://script.google.com/macros/s/AKfycby5CCfXxWIEGhbboZeLkXLo1YUUB1gQrK2IGHw_Vs7DLTMhLtQ1rHidBJtI6PWH84rj/exec"
+    const url = "https://script.google.com/macros/s/AKfycby5CCfXxWIEGhbboZeLkXLo1YUUB1gQrK2IGHw_Vs7DLTMhLtQ1rHidBJtI6PWH84rj/exec"
     return await fetch(
       url,
       {
