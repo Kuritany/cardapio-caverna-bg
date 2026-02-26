@@ -63,9 +63,9 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
 
   useEffect(() => {
     if (localStorage.getItem("nome")) setNome(localStorage.getItem("nome") ?? "");
-    if (localStorage.getItem("telefone")) setNome(localStorage.getItem("telefone") ?? "(67)");
-    if (sessionStorage.getItem("unidade")) setNome(sessionStorage.getItem("unidade") ?? "1");
-    if (sessionStorage.getItem("mesa")) setNome(sessionStorage.getItem("mesa") ?? "");
+    if (localStorage.getItem("telefone")) setTelefone(localStorage.getItem("telefone") ?? "(67)");
+    if (sessionStorage.getItem("unidade")) setUnidade(sessionStorage.getItem("unidade") ?? "1");
+    if (sessionStorage.getItem("mesa")) setMesa(sessionStorage.getItem("mesa") ?? "");
   }, []);
 
   const orderItemsCount = useMemo(() => {
