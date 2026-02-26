@@ -168,13 +168,13 @@ export default function FinishOrderModal({ show, onClose }: Props) {
           </div>
           <div className="overflow-y-scroll">
             <ListGroup>
-              {orderItems.keys().toArray().map((name) => (
+              {[...orderItems.entries()].map((item: [string, OrderItemData], index: number) => (
                 <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start p-1">
                     <div className="w-100 d-flex me-1">
-                      {orderItems.get(name)!.amount}X {name}
+                      {item[1].amount}X {item[0]}
                       <span className='ms-auto'>
                         {new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"})
-                          .format(orderItems.get(name)!.amount * orderItems.get(name)!.itemData.preco)}
+                          .format(item[1].amount * item[1].itemData.preco)}
                       </span>
                     </div>
                 </ListGroup.Item>
@@ -182,7 +182,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
             </ListGroup>
           </div>
         </Modal.Body>
-        <Modal.Footer>keys: string [] = Object.keys(formConfig);
+        <Modal.Footer>
           <Button variant="danger" onClick={onClose}>
             Cancelar
           </Button>
