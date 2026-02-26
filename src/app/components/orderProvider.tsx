@@ -70,17 +70,17 @@ export const OrderProvider = ({ menuData, children }: { menuData: any, children:
 
   const orderItemsCount = useMemo(() => {
     let count = 0;
-    // orderItems.values().toArray().forEach((orderItemData) => {
-    //   count += orderItemData.amount;
-    // });
+    [...orderItems.values()].forEach((orderItemData) => {
+      count += orderItemData.amount;
+    });
     return count;
   }, [orderItems]);
 
   const orderItemsPriceTotal = useMemo(() => {
     let price = 0;
-    // orderItems.values().toArray().forEach((orderItemData) => {
-    //   price += orderItemData.itemData.preco * orderItemData.amount;
-    // });
+    [...orderItems.values()].forEach((orderItemData) => {
+      price += orderItemData.itemData.preco * orderItemData.amount;
+    });
     return new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(price);
   }, [orderItems]);
 

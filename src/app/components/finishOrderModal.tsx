@@ -54,7 +54,7 @@ export default function FinishOrderModal({ show, onClose }: Props) {
           telefone,
           unidade,
           mesa,
-          orderItems: orderItems.values().toArray(),
+          orderItems: [...orderItems.values()],
           observacao: e.target.observacao.value
         }
       );
