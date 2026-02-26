@@ -14,7 +14,7 @@ export default async function OrderPoster({ onClose }: {  onClose: () => void })
     setIsLoading,
     setOrderItems
   } = useOrderContext();
-
+  
   try {
     if (!nome) throw Error('Campo "Nome" deve ser informado.');
     if (!telefone || telefone.length != 15) throw Error('Campo "Telefone" deve ser informado.');
@@ -22,12 +22,12 @@ export default async function OrderPoster({ onClose }: {  onClose: () => void })
     if (!mesa) throw Error('Campo "Mesa" deve ser informado.');
     const status = await OrdersService.postOrder(
       {
-        nome,
+        nome: encodeURIComponent(nome),
         telefone,
         unidade,
         mesa,
         orderItems: [...orderItems.values()],
-        observacao
+        observacao: encodeURIComponent(observacao)
       }
     );
     setOrderItems({ type: "clear" });
